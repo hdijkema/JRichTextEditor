@@ -27,15 +27,15 @@ public class JXMLNoteConstants {
 	private static int _indentPoints=36;
 	
 	public static String infoVersion() {
-		return "1.0.0.8";
+		return "1.0.0.9";
 	}
 	
 	public static String infoWebSite() {
-		return "http://oesterholt.net/index.php?env=data&page=jxmlnote";
+		return "https://github.com/hoesterholt/JRichTextEditor";
 	}
 	
 	public static String infoLicense() {
-		return "(c) 2009-2011 Hans Oesterholt-Dijkema";
+		return "(c) 2009-2013 Hans Oesterholt-Dijkema";
 	}
 	
 	public static int getStandardIndentPoints() {
