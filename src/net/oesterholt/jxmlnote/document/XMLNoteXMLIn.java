@@ -27,6 +27,7 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Stack;
@@ -147,6 +148,7 @@ public class XMLNoteXMLIn extends DefaultHandler {
 	private Stack<DefaultHandler>   		_handlerStack=null;
 	private Stack<String>					_xpath=null;
 	private Hashtable<String,MXMLNoteMark>	_marks=null;
+	private Hashtable<String,MXMLNoteMark>	_incompleteMarks=null;
 	
 	private Integer getAlign(String align) {
 		if (align==null) {
@@ -309,7 +311,7 @@ public class XMLNoteXMLIn extends DefaultHandler {
 		private ApplyAttributes				_underline;
 		private ApplyAttributes				_image;
 		private ParsHandler					_pars;
-		private int							_docOffset;
+		private int						_docOffset;
 		
 		public String getText() {
 			return _txt;
@@ -370,19 +372,37 @@ public class XMLNoteXMLIn extends DefaultHandler {
 					wrongAttribute(qName,"type",String.format(form,_type));
 				}
 				if (_type.equals("start")) {
+					//System.out.println("mark[str] = "+_id);
 					MXMLNoteMark m=new MXMLNoteMark(_id,_docOffset+_txt.length());
 					m.markClass(_class);
 					if (_marks.get(_id)==null) {
+						MXMLNoteMark m1 = _incompleteMarks.get(_id);
+						if (m1 != null) { // found an end mark before a start mark, resolve
+							//System.out.println("mark[inc] = "+_id+", end offset = "+m1.endOffset());
+							m.endOffset(m1.endOffset());
+							_incompleteMarks.remove(_id);
+						}
 						_marks.put(_id, m);
 					} else {
 						String form=_translator.translate("E10001:Found a start of mark with id '%s'. A mark with this id already exists");
 						throw new SAXException(String.format(form,_id));
 					}
 				} else if (_type.equals("end")) {
+					//System.out.println("mark[end] = "+_id);
 					MXMLNoteMark m=_marks.get(_id);
 					if (m==null) {
-						String form=_translator.translate("E10002:Found an end of mark with id '%s' without a start");
-						throw new SAXException(String.format(form,_id));
+						// Workaround for crash, where no start offset has been found.
+						// Normally this is a result of a store of an empty start - end mark, 
+						// which can result in the storage of the end mark, followed by the start mark,
+						// which isn't what you want. So we just ignore end marks without start marks
+						// and ignore start marks that were already encountered as end marks.
+						// Maybe we need to Garbage collect some tables for the marks.
+						MXMLNoteMark m1 = new MXMLNoteMark(_id,_docOffset+_txt.length());
+						m1.endOffset(_docOffset+_txt.length());
+						m1.markClass(_class);
+						_incompleteMarks.put(_id,  m1);
+						//String form=_translator.translate("E10002:Found an end of mark with id '%s' without a start");
+						//throw new SAXException(String.format(form,_id));
 					} else {
 						m.endOffset(_docOffset+_txt.length());
 					}
@@ -595,6 +615,7 @@ public class XMLNoteXMLIn extends DefaultHandler {
 	}
 	
 	public void fromXML(String xml,XMLNoteImageIcon.Provider prov) throws BadDocumentException {
+		//System.out.println(xml);
 		InputSource source=new InputSource(new StringReader(xml));
 		if (prov!=null) { _doc.setXMLNoteImageIconProvider(prov); }
 		boolean ignore=_doc.getUndoManager().setIgnore(true);
@@ -620,6 +641,13 @@ public class XMLNoteXMLIn extends DefaultHandler {
 						}
 					}
 				}
+				if (_incompleteMarks.size() > 0) {
+					throw new BadDocumentException(String.format(_translator.translate("E10004:%d xmlnote End Mark(s) without start"),
+												    			 _incompleteMarks.size()
+												    			 )
+												    
+												    );
+				}
 			} catch (IOException e) {
 				throw new BadDocumentException(e);
 			}
@@ -641,6 +669,7 @@ public class XMLNoteXMLIn extends DefaultHandler {
 		_xpath=new Stack<String>();
 		_handlerStack=new Stack<DefaultHandler>();
 		_marks=new Hashtable<String,MXMLNoteMark>();
+		_incompleteMarks=new Hashtable<String,MXMLNoteMark>();
 	}
 
 }

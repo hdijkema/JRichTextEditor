@@ -24,6 +24,7 @@ package net.oesterholt.jxmlnote.document;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -108,7 +109,37 @@ public class XMLNoteXMLOut {
 			// marks
 			Vector<XMLNoteMark> enders=_doc.getMarksEndingWith(i+start);
 			Vector<XMLNoteMark> starters=_doc.getMarksStartingWith(i+start);
-			if ((enders.size()>0) || starters.size()>0) {
+			Vector<XMLNoteMark> es = new Vector<XMLNoteMark>();
+			
+			// check if we have enders with the same Id as starters, because we don't want
+			// to get the end --> start situation. We need to first save the start mark
+			// and next the end mark. ==> This is a special case where the mark has 
+			// size 0.
+			
+			Hashtable<String,XMLNoteMark> ends = new Hashtable<String,XMLNoteMark>();
+			{
+				Iterator<XMLNoteMark> it = enders.iterator();
+				while (it.hasNext()) {
+					XMLNoteMark m = it.next();
+					ends.put(m.id(),m);
+				}
+				it = starters.iterator();
+				while (it.hasNext()) {
+					XMLNoteMark m = it.next();
+					if (ends.get(m.id()) != null) {
+						es.add(m);
+					}
+				}
+				it = es.iterator();
+				while (it.hasNext()) {
+					XMLNoteMark m = it.next();
+					enders.remove(m);
+					starters.remove(m);
+				}
+			}
+			
+			// Now output all marks. 
+			if ((enders.size()>0) || starters.size()>0 || es.size()>0) {
 				if (k<i) {
 					String s=txt.substring(k,i);
 					k=i;
@@ -136,6 +167,26 @@ public class XMLNoteXMLOut {
 					mark.setAttribute("id", id);
 					if (c!=null) { mark.setAttribute("class",c); }
 					xmlElement.appendChild(mark);
+				}
+				it=es.iterator();
+				while(it.hasNext()) {
+					XMLNoteMark m=it.next();
+					String c=m.markClass();
+					String id=m.id();
+					{
+						org.w3c.dom.Element mark=doc.createElement("mark");
+						mark.setAttribute("type","start");
+						mark.setAttribute("id", id);
+						if (c!=null) { mark.setAttribute("class",c); }
+						xmlElement.appendChild(mark);
+					}
+					{
+						org.w3c.dom.Element mark=doc.createElement("mark");
+						mark.setAttribute("type","end");
+						mark.setAttribute("id", id);
+						if (c!=null) { mark.setAttribute("class", c); }
+						xmlElement.appendChild(mark);
+					}
 				}
 			}
 			
