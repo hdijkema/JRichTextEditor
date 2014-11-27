@@ -1,7 +1,7 @@
 JRichTextEditor
 ================
 
-A rich text editor for Swing – uses structured XML as its format.
+A rich text editor for Swing that uses structured XML as its format.
 
 JRichTextEditor is a stable rich text editor for the Java Swing widget set. 
 It has a range of features, including clipboard integration, zooming, metadata, 
