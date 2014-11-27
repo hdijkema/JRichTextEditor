@@ -57,7 +57,7 @@ import net.dijkema.jxmlnote.widgets.JXMLNotePane;
 import net.dijkema.jxmlnote.widgets.JXMLNoteRuler;
 import net.dijkema.jxmlnote.widgets.marks.DefaultMarkMarkupProviderMaker;
  
-
+ 
 public class JXMLNoteEditor extends JScrollPane implements ActionListener {
 	
 	/**
