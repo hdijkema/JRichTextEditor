@@ -38,6 +38,7 @@ import java.io.ObjectInputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Stack;
 import java.util.WeakHashMap;
 import java.util.concurrent.Semaphore;
@@ -507,7 +508,13 @@ public class JHelpViewer extends JPanel implements TreeSelectionListener,
 		try {
 			InputStream in = hj.getInputStream(hze);
 			ObjectInputStream dec = new ObjectInputStream(in);
-			HelpEntry he = (HelpEntry) dec.readObject();
+			HelpEntry he;
+			if (JHelpEditor.NEW_READ) {
+				he = new HelpEntry();
+				he.readObject(dec);
+			} else {
+				he = (HelpEntry) dec.readObject();
+			}
 			in.close();
 			_document.resetFromXML(he.getXmlnote());
 		} catch (Exception E) {
@@ -527,7 +534,26 @@ public class JHelpViewer extends JPanel implements TreeSelectionListener,
 			if (ze != null) {
 				InputStream in = hj.getInputStream(ze);
 				ObjectInputStream dec = new ObjectInputStream(in);
-				_topics = (DefaultMutableTreeNode) dec.readObject();
+				if (JHelpEditor.NEW_READ) {
+					Hashtable<String, HelpTopic> htt = new Hashtable<String, HelpTopic>();
+					DefaultMutableTreeNode ids = (DefaultMutableTreeNode) dec.readObject();
+					Enumeration<DefaultMutableTreeNode> en = (Enumeration<DefaultMutableTreeNode>) ids.breadthFirstEnumeration();
+					while (en.hasMoreElements()) {
+						DefaultMutableTreeNode id = en.nextElement();
+						HelpTopic ht = new HelpTopic();
+						ht.readObject(dec);
+						htt.put(ht.getTopicId(), ht);
+					}
+					en = (Enumeration<DefaultMutableTreeNode>) ids.breadthFirstEnumeration();
+					while (en.hasMoreElements()) {
+						DefaultMutableTreeNode id = en.nextElement();
+						String t_id = (String) id.getUserObject();
+						id.setUserObject(htt.get(t_id));
+					}
+					_topics = ids;
+				} else {
+					_topics = (DefaultMutableTreeNode) dec.readObject();
+				}
 				in.close();
 			}
 		} catch (Exception e) {
