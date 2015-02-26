@@ -593,7 +593,7 @@ public class JXMLNoteDemo {
 				_panel.setLayout(new BorderLayout());
 				
 				try {
-					_document.insertString(0, "√©√©n extra graag", null);
+					_document.insertString(0, "…Èn extra graag", null);
 				} catch (BadLocationException e2) {
 					e2.printStackTrace();
 				}
@@ -766,22 +766,22 @@ public class JXMLNoteDemo {
 
 				_bar.insertSection("mark", "_Mark");
 				{
-					URL url=this.getClass().getResource("/net/dijkema/demo/jxmlnote/resources/mark.png");
+					URL url=this.getClass().getResource("/nl/dykema/demo/jxmlnote/resources/mark.png");
 					ImageIcon imark = new ImageIcon(url);
 					_bar.add("mark", "mark", "mark", this, imark);
 				}
 				{
-					URL url=this.getClass().getResource("/net/dijkema/demo/jxmlnote/resources/unmark.png");
+					URL url=this.getClass().getResource("/nl/dykema/demo/jxmlnote/resources/unmark.png");
 					ImageIcon iumark = new ImageIcon(url);
 					_bar.add("mark", "unmark", "unmark", this, iumark);
 				}
 				{
-					URL url=this.getClass().getResource("/net/dijkema/demo/jxmlnote/resources/style.png");
+					URL url=this.getClass().getResource("/nl/dykema/demo/jxmlnote/resources/style.png");
 					ImageIcon lighters = new ImageIcon(url);
 					_bar.add("mark", "lighters", "lighters", this, lighters);
 				}
 				{
-					URL url=this.getClass().getResource("/net/dijkema/demo/jxmlnote/resources/prefs.png");
+					URL url=this.getClass().getResource("/nl/dykema/demo/jxmlnote/resources/prefs.png");
 					ImageIcon prefs = new ImageIcon(url);
 					_bar.add("mark", "prefs", "Style preferences", this, prefs);
 				}
@@ -795,7 +795,7 @@ public class JXMLNoteDemo {
 				try {
 					_document.insertString(_document.getLength(), "\n", null);
 					XMLNoteImageIconSize size=new XMLNoteImageIconSize(3*72,-1,XMLNoteImageIconSize.TYPE_PT);
-					URL image=this.getClass().getResource("/net/dijkema/demo/jxmlnote/resources/image.jpg");
+					URL image=this.getClass().getResource("/nl/dykema/demo/jxmlnote/resources/image.jpg");
 					_document.insertImage(_document.getLength(),image,"cover",size);
 					_document.applyAlign(StyleConstants.ALIGN_CENTER, _document.getLength(),1);
 					_document.insertString(_document.getLength(), "\n", null);

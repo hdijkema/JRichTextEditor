@@ -4,7 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libraries/swing-worker-1.2.jar"/>
 	<classpathentry kind="lib" path="libraries/pdf-renderer-1.0.5.jar"/>
-	<classpathentry kind="lib" path="libraries/miglayout-3.7.3.1.jar"/>
 	<classpathentry kind="lib" path="libraries/jtidy-r820.jar"/>
 	<classpathentry kind="lib" path="libraries/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="libraries/flamingo.jar"/>
@@ -12,5 +11,6 @@
 	<classpathentry kind="lib" path="libraries/xerces-2_9_0/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="libraries/xerces-2_9_0/serializer.jar"/>
 	<classpathentry kind="lib" path="libraries/xerces-2_9_0/resolver.jar"/>
+	<classpathentry kind="lib" path="libraries/miglayout-4.0-swing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
