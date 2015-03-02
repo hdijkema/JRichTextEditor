@@ -35,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import nl.dykema.jxmlnote.exceptions.DefaultXMLNoteErrorHandler;
 import nl.dykema.jxmlnote.interfaces.XMLNotePreferences;
@@ -43,8 +44,6 @@ import nl.dykema.jxmlnote.internationalization.XMLNoteTranslator;
 import nl.dykema.jxmlnote.report.Report.ReportListener;
 import nl.dykema.jxmlnote.report.elements.ReportElement;
 import nl.dykema.jxmlnote.widgets.JXMLNoteSwingUtils;
-
-import org.jdesktop.swingworker.SwingWorker;
 
 public class ReportProgressBar extends JDialog {
 	

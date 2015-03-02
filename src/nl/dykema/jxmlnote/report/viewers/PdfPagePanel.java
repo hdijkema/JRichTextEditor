@@ -48,10 +48,9 @@ import java.util.Set;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingWorker;
 
 import nl.dykema.jxmlnote.utils.DPIAdjuster;
-
-import org.jdesktop.swingworker.SwingWorker;
 
 import com.sun.pdfview.PDFPage;
 

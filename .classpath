@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libraries/swing-worker-1.2.jar"/>
 	<classpathentry kind="lib" path="libraries/pdf-renderer-1.0.5.jar"/>
 	<classpathentry kind="lib" path="libraries/jtidy-r820.jar"/>
 	<classpathentry kind="lib" path="libraries/iText-2.1.7.jar"/>
