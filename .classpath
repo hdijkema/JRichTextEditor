@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="libraries/xerces-2_9_0/serializer.jar"/>
 	<classpathentry kind="lib" path="libraries/xerces-2_9_0/resolver.jar"/>
 	<classpathentry kind="lib" path="libraries/miglayout-4.0-swing.jar"/>
+	<classpathentry kind="lib" path="libraries/hribbon.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
