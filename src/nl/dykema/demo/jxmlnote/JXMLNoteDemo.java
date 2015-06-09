@@ -69,7 +69,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyleConstants;
 import javax.xml.parsers.ParserConfigurationException;
 
-import nl.dykema.JXMLNoteEditor;
+import nl.dykema.jxmlnote.JXMLNoteEditor;
 import nl.dykema.jxmlnote.document.DocumentAdminEvent;
 import nl.dykema.jxmlnote.document.DocumentAdminListener;
 import nl.dykema.jxmlnote.document.DocumentPreEvent;

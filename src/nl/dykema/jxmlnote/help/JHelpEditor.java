@@ -89,7 +89,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import nl.dykema.JXMLNoteEditor;
+import nl.dykema.jxmlnote.JXMLNoteEditor;
 import nl.dykema.jxmlnote.document.DocumentAdminEvent;
 import nl.dykema.jxmlnote.document.DocumentAdminListener;
 import nl.dykema.jxmlnote.document.DocumentPreListener;

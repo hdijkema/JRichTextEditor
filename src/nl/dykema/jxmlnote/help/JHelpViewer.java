@@ -58,7 +58,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import nl.dykema.JXMLNoteViewer;
+import nl.dykema.jxmlnote.JXMLNoteViewer;
 import nl.dykema.jxmlnote.document.XMLNoteDocument;
 import nl.dykema.jxmlnote.document.XMLNoteImageIcon;
 import nl.dykema.jxmlnote.document.XMLNoteImageIconSize;

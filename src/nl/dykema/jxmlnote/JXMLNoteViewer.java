@@ -17,7 +17,7 @@
  *   
  * ******************************************************************************/
 
-package nl.dykema;
+package nl.dykema.jxmlnote;
 
 import java.awt.BorderLayout;
 import java.awt.LayoutManager;

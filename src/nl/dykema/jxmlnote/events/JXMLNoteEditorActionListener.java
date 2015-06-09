@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Vector;
 
-import nl.dykema.JXMLNoteEditor;
+import nl.dykema.jxmlnote.JXMLNoteEditor;
 
 public class JXMLNoteEditorActionListener implements ActionListener {
 	
