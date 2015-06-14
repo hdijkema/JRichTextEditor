@@ -64,13 +64,15 @@ public class JXMLNoteHRibbonBand {
 					}
 				// 	handle menu
 				} else {
-					JComponent comp=bar.getComponent(section,i);
+					JComponent comp=bar.getComponent(section, i);
 					if (comp instanceof JButton) {
 						JButton b=(JButton) comp;
 						
-						String txt = b.getText();
+						String txt = b.getToolTipText();  // NOT b.getText() (= empty).
 						String cmd = b.getActionCommand();
 						String tooltip = b.getToolTipText();
+						
+						//System.out.println("action = "+cmd + ", txt = "+ txt + ", tt = " + tooltip);
 						
 						HRibbonButton cb=new HRibbonButton(txt);
 						cb.setName(cmd);
