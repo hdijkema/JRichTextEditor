@@ -1,7 +1,6 @@
 package nl.dykema.jxmlnote.toolbar.hribbon;
 
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -9,18 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-
-import org.pushingpixels.flamingo.api.common.JCommandButton;
-import org.pushingpixels.flamingo.api.common.JCommandMenuButton;
-import org.pushingpixels.flamingo.api.common.RichTooltip;
-import org.pushingpixels.flamingo.api.common.JCommandButton.CommandButtonKind;
-import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
-import org.pushingpixels.flamingo.api.common.popup.JCommandPopupMenu;
-import org.pushingpixels.flamingo.api.common.popup.JPopupPanel;
-import org.pushingpixels.flamingo.api.common.popup.PopupPanelCallback;
-import org.pushingpixels.flamingo.api.ribbon.RibbonElementPriority;
-import org.pushingpixels.flamingo.api.ribbon.resize.CoreRibbonResizePolicies;
-import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
 
 import nl.dykema.hribbon.HRibbonBand;
 import nl.dykema.hribbon.HRibbonButton;
@@ -31,6 +18,7 @@ import nl.dykema.jxmlnote.toolbar.JXMLNoteToolBar;
 public class JXMLNoteHRibbonBand {
 	
 	public static HRibbonBand ToolBarToBand(JXMLNoteToolBar bar, HRibbonBand band) {
+		band.setMaxLowButtonsPerRow(1);
 		Vector<String> sections=bar.currentSections();
 		Iterator<String> it=sections.iterator();
 		boolean first=true;
@@ -65,6 +53,7 @@ public class JXMLNoteHRibbonBand {
 					if (item!=null) {
 						JXMLNoteIcon xnicn=(JXMLNoteIcon) item.getIcon();
 						JMenuItem mb=new JMenuItem(item.getText(), xnicn);
+						mb.setActionCommand(item.getActionCommand());
 						//mb.setFocusable(false);
 						//mb.getActionModel().setActionCommand(item.getActionCommand());
 						//if (key!=null) { mb.setActionKeyTip(key); }
@@ -78,9 +67,15 @@ public class JXMLNoteHRibbonBand {
 					JComponent comp=bar.getComponent(section,i);
 					if (comp instanceof JButton) {
 						JButton b=(JButton) comp;
-						HRibbonButton cb=new HRibbonButton(b.getText());
-						cb.setName(b.getActionCommand());
-						cb.setToolTipText(b.getToolTipText());
+						
+						String txt = b.getText();
+						String cmd = b.getActionCommand();
+						String tooltip = b.getToolTipText();
+						
+						HRibbonButton cb=new HRibbonButton(txt);
+						cb.setName(cmd);
+						cb.setActionCommand(cmd);
+						cb.setToolTipText(tooltip);
 						//if (key!=null) { cb.setActionKeyTip(key); }
 						cb.setFocusable(false);
 						JXMLNoteIcon xnicn=(JXMLNoteIcon) b.getIcon();
@@ -90,7 +85,7 @@ public class JXMLNoteHRibbonBand {
 						for (ActionListener l : b.getActionListeners()) {
 							cb.addActionListener(l);
 						}
-						int prio = HRibbonBand.Priority.MEDIUM;
+						int prio = HRibbonBand.Priority.LOW;
 						if (section.charAt(0)=='!') { prio = HRibbonBand.Priority.TOP; }
 						else if (section.charAt(0)=='+') { prio = HRibbonBand.Priority.MEDIUM; }
 						band.addButton(cb, prio);
